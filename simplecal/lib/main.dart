@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:simplecal/widgets/buttons.dart';
 import 'package:simplecal/widgets/calculation.dart';
@@ -29,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var opp1, opp2,result;
+  var opp1="", opp2="", operation="", result=0.00;
   var i = true;
   var calcultext = "";
   void fun(var a) {
@@ -45,63 +47,33 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         calcultext = '$calcultext$a';
       });
-    } else if (a == "-") {
-      if (calcultext.isEmpty) {
-        setState(() {
-          calcultext = '$calcultext$a';
-        });
-      } else {
-        nonnumber(a);
+    }
+    else if(a=="+")
+    {
+      setState(() {
+      if(opp1=="" && result==0.00)
+      {
+        opp1="$calcultext";
+        operation="$a";
+        calcultext="";
       }
-    } else {
-      nonnumber(a);
+      else{
+        opp2="$calcultext";
+        calcultext="";
+        result=result+double.parse(opp1)+double.parse(opp2);
+        calcultext="$result";
+        result=double.parse(calcultext);
+        opp2="";
+      }  
+        
+      });
+      
     }
   }
 
-  void nonnumber(String t) {
+  void nonnumber() {
     setState(() {
-      if (t == "AC") {
-        calcultext = "";
-      } else if (t == "+/-") {
-        if (calcultext.substring(0, 1) == "-") {
-          calcultext = '$calcultext';
-          calcultext = calcultext.substring(1, calcultext.length);
-        } else {
-          calcultext = '-$calcultext';
-        }
-      } else if (t == "/" || t == "=" || t == "+" || t == "x" || t == "-") {
-        if (opp1 == null) {
-          opp1 = calcultext;
-          calcultext = "";
-          print(opp1);
-        } else if (t == "+") {
-          opp2 = calcultext;
-          result = double.parse(opp1) + double.parse(opp2);
-          opp1=result;
-        } else if (t == "-") {
-          opp2 = calcultext;
-          result = double.parse(opp1) - double.parse(opp2);
-          opp1=result;
-          // calcultext = '$result';
-        }
-        else if (t == "x") {
-          opp2 = calcultext;
-          result = double.parse(opp1) * double.parse(opp2);
-          opp1=result;
-          // calcultext = '$result';
-        }
-        else if (t == "/") {
-          opp2 = calcultext;
-          result = double.parse(opp1) / double.parse(opp2);
-          opp1=result;
-          // calcultext = '$result';
-        }
-        else if(t=="=")
-        {
-          calcultext='$result';
-        }
-
-      }
+     
     });
   }
 
