@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:simplecal/widgets/buttons.dart';
 import 'package:simplecal/widgets/calculation.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,49 +32,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var opp1="", opp2="", operation="", result=0.00;
-  var i = true;
+  var condition = true, result;
+
+  // List<dynamic> Expression = [];
   var calcultext = "";
   void fun(var a) {
-    if (a != "AC" &&
-        a != "+/-" &&
-        a != "%" &&
-        a != "/" &&
-        a != "x" &&
-        a != "+" &&
-        a != "=" &&
-        a != "()" &&
-        a != "-") {
-      setState(() {
-        calcultext = '$calcultext$a';
-      });
-    }
-    else if(a=="+")
-    {
-      setState(() {
-      if(opp1=="" && result==0.00)
-      {
-        opp1="$calcultext";
-        operation="$a";
-        calcultext="";
-      }
-      else{
-        opp2="$calcultext";
-        calcultext="";
-        result=result+double.parse(opp1)+double.parse(opp2);
-        calcultext="$result";
-        result=double.parse(calcultext);
-        opp2="";
-      }  
-        
-      });
-      
-    }
-  }
-
-  void nonnumber() {
     setState(() {
-     
+      if (a == "AC") {
+        calcultext = "";
+        condition=true;
+      } else if (a == "⌫") {
+        calcultext = calcultext.substring(0, calcultext.length - 1);
+        if(calcultext.substring(calcultext.length-1,calcultext.length)=="(")
+        {
+          condition=true;
+        }
+        else if(calcultext.substring(calcultext.length-1,calcultext.length)==")")
+        {
+          condition=false;
+
+        }
+      } else if (a == "%") {
+        var exp=double.parse(calcultext)/100;
+        calcultext='$exp';
+      } else if (a == "()") {
+        if(condition==true)
+        {
+          calcultext="$calcultext(";
+          condition=false;
+
+        }
+        else{
+          calcultext="$calcultext)";
+          condition=true;
+
+        }
+      } else if (a == "=") {
+        try {
+          Parser p = Parser();
+          // calcultext="(2+3)*3";
+          Expression exp = p.parse(calcultext);
+
+          ContextModel cm = ContextModel();
+          
+          calcultext = '${exp.evaluate(EvaluationType.REAL, cm)}';
+        } catch (e) {
+          calcultext = "Error";
+        }
+      } 
+        else if(a=="x")
+        {
+          calcultext="$calcultext*";
+        }
+      else {
+        calcultext = "$calcultext$a";
+      }
     });
   }
 
