@@ -9,10 +9,7 @@ class ButtonLook extends StatelessWidget {
   ButtonLook(this.text, this.color,this.fun);
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 200,
-        width: 200,
-        child: FloatingActionButton(
+    return  FloatingActionButton(
             backgroundColor: color,
             child: Text(
               text,
@@ -23,6 +20,6 @@ class ButtonLook extends StatelessWidget {
             ),
             onPressed: () {
               fun(text);
-            }));
+            });
   }
 }

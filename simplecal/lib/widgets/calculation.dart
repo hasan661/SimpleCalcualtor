@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 class Calculation extends StatelessWidget {
   // const Calculation({ Key? key }) : super(key: key);
   final text;
+  final boolean;
 
-  Calculation(this.text);
+  const Calculation(this.text,this.boolean);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class Calculation extends StatelessWidget {
           readOnly: true,
           // controller: widget.calculx,
           showCursor: false,
-          decoration: InputDecoration(border: InputBorder.none, hintText: text,hintStyle: TextStyle(fontSize: 40,color: Colors.black,fontWeight: FontWeight.bold)),
+          decoration: InputDecoration(border: InputBorder.none, hintText: text,hintStyle: TextStyle(fontSize: 40,color: boolean==true?Colors.white : Colors.black,fontWeight: FontWeight.bold)),
         ),
       );
       }); 
