@@ -97,28 +97,30 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaquery = MediaQuery.of(context);
     return Scaffold(
         backgroundColor: incognitocolor == false ? Colors.white : Colors.black,
-        body: Column(
-          children: [
-            Container(
-                height:
-                    (mediaquery.size.height - mediaquery.padding.top) * 0.14,
-                child: Switch(
-                    activeColor: Colors.white,
-                    value: incognitocolor,
-                    onChanged: (val) {
-                      setState(() {
-                        incognitocolor = val;
-                      });
-                    })),
-            Container(
-              height: (mediaquery.size.height - mediaquery.padding.top) * 0.20,
-              child: Calculation(calcultext, incognitocolor),
-            ),
-            Container(
-              height: (mediaquery.size.height - mediaquery.padding.top) * 0.66,
-              child: Buttons(fun, color1, color2, color3),
-            )
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                  height:
+                      (mediaquery.size.height - mediaquery.padding.top) * 0.14,
+                  child: Switch(
+                      activeColor: Colors.white,
+                      value: incognitocolor,
+                      onChanged: (val) {
+                        setState(() {
+                          incognitocolor = val;
+                        });
+                      })),
+              Container(
+                height: (mediaquery.size.height - mediaquery.padding.top) * 0.20,
+                child: Calculation(calcultext, incognitocolor),
+              ),
+              Container(
+                height: (mediaquery.size.height - mediaquery.padding.top) * 0.66,
+                child: Buttons(fun, color1, color2, color3),
+              )
+            ],
+          ),
         ));
   }
 }
