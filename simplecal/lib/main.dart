@@ -1,11 +1,17 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:simplecal/widgets/buttons.dart';
 import 'package:simplecal/widgets/calculation.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(MyApp());
 }
 
@@ -29,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var realvalue;
   var condition = true, result;
   var incognitocolor = true;
   var calcultext = "";
@@ -69,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           ContextModel cm = ContextModel();
 
-          calcultext = '${exp.evaluate(EvaluationType.REAL, cm)}';
+          calcultext = double.parse('${exp.evaluate(EvaluationType.REAL, cm)}').toStringAsFixed(2);  ;
         } catch (e) {
           calcultext = "Error";
         }
