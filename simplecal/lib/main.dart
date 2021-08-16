@@ -38,22 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
         calcultext = "";
         condition = true;
       } else if (a == "⌫") {
-        if (calcultext.length==1){
-          calcultext="";
-        }
-        else{
+        if (calcultext.length == 1) {
+          calcultext = "";
+        } else {
           calcultext = calcultext.substring(0, calcultext.length - 1);
-        if (calcultext.substring(calcultext.length - 1, calcultext.length) ==
-            "(") {
-          condition = true;
-        } else if (calcultext.substring(
-                calcultext.length - 1, calcultext.length) ==
-            ")") {
-          condition = false;
+          if (calcultext.substring(calcultext.length - 1, calcultext.length) ==
+              "(") {
+            condition = true;
+          } else if (calcultext.substring(
+                  calcultext.length - 1, calcultext.length) ==
+              ")") {
+            condition = false;
+          }
         }
-          
-        }
-        
       } else if (a == "%") {
         var exp = double.parse(calcultext) / 100;
         calcultext = '$exp';
